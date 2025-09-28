@@ -130,7 +130,7 @@ const Registar = () => {
         <Card className="shadow-wellness">
           <CardHeader className="space-y-1 text-center">
             <div className="flex justify-center mb-4">
-              <Logo size="medium" />
+              <Logo className="h-12" />
             </div>
             <CardTitle className="text-2xl font-bold">
               Alimentação Inteligente

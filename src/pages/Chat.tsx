@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AuthWrapper } from "@/components/AuthWrapper";
-import { LockedOverlay } from "@/components/LockedOverlay";
+import LockedOverlay from "@/components/LockedOverlay";
 import { useDemo } from "@/hooks/useDemo";
 import { MessageCircle, Send, Bot, User } from "lucide-react";
 
@@ -147,10 +147,7 @@ const Chat = () => {
   return (
     <AuthWrapper requireAuth>
       {isDemo ? (
-        <LockedOverlay 
-          title="Chat IA Nutricional"
-          message="Converse com o nosso assistente inteligente sobre nutrição, receitas e objetivos fitness. Disponível apenas para utilizadores registados."
-        >
+        <LockedOverlay message="Converse com o nosso assistente inteligente sobre nutrição, receitas e objetivos fitness. Disponível apenas para utilizadores registados.">
           <ChatContent />
         </LockedOverlay>
       ) : (

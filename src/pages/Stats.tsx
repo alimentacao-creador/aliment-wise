@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AuthWrapper } from "@/components/AuthWrapper";
-import { LockedOverlay } from "@/components/LockedOverlay";
+import LockedOverlay from "@/components/LockedOverlay";
 import { Logo } from "@/components/Logo";
 import { useDemo } from "@/hooks/useDemo";
 import { useAuth } from "@/hooks/useAuth";
@@ -69,7 +69,6 @@ const Stats = () => {
     if (locked) {
       return (
         <LockedOverlay
-          title="Funcionalidade Premium"
           message="Esta funcionalidade está disponível apenas para utilizadores registados. Crie já a sua conta gratuita e desbloqueie 7 dias Premium."
         >
           {CardComponent}
@@ -99,7 +98,6 @@ const Stats = () => {
     if (locked) {
       return (
         <LockedOverlay
-          title="Funcionalidade Premium"
           message="Esta funcionalidade está disponível apenas para utilizadores registados. Crie já a sua conta gratuita e desbloqueie 7 dias Premium."
         >
           {CardComponent}
@@ -117,7 +115,7 @@ const Stats = () => {
         <div className="bg-card border-b border-border px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Logo size="small" />
+              <Logo className="h-10" />
               <div>
                 <h1 className="text-xl font-bold text-foreground">Estatísticas</h1>
                 <p className="text-sm text-muted-foreground">

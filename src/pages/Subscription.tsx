@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AuthWrapper } from "@/components/AuthWrapper";
-import { LockedOverlay } from "@/components/LockedOverlay";
+import LockedOverlay from "@/components/LockedOverlay";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/hooks/useAuth";
 import { useDemo } from "@/hooks/useDemo";
@@ -24,7 +24,7 @@ const Subscription = () => {
       <div className="bg-card border-b border-border px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <Logo size="small" />
+            <Logo className="h-10" />
             <div>
               <h1 className="text-xl font-bold text-foreground">Subscrição</h1>
               <p className="text-sm text-muted-foreground">
@@ -208,7 +208,6 @@ const Subscription = () => {
     <AuthWrapper>
       {isDemo ? (
         <LockedOverlay
-          title="Gestão de Subscrição"
           message="Desbloqueie todas as funcionalidades criando a sua conta gratuita. Experimente 7 dias Premium sem compromisso."
         >
           <SubscriptionContent />

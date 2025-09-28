@@ -315,7 +315,7 @@ const Workouts = () => {
         <div className="bg-card border-b border-border px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Logo size="small" />
+              <Logo className="h-10" />
               <div>
                 <h1 className="text-xl font-bold text-foreground">Treinos</h1>
                 <p className="text-sm text-muted-foreground">
