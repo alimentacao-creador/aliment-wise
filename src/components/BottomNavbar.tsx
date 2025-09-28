@@ -1,9 +1,7 @@
 "use client";
-
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Home, Utensils, Dumbbell, BarChart3, User, CreditCard } from "lucide-react";
-import { isDemo } from "@/lib/demo";
-import { useEffect, useState } from "react";
 
 const items = [
   { href: "/dashboard", label: "Início", Icon: Home },
@@ -15,28 +13,24 @@ const items = [
 ];
 
 export default function BottomNavbar() {
-  const location = useLocation();
-  const pathname = location.pathname;
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    setShow(isDemo());
-  }, []);
-
-  if (!show) return null;
+  const pathname = usePathname();
+  if (typeof window !== "undefined" && localStorage.getItem("demo") !== "true") return null;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t bg-white/95 backdrop-blur z-50">
-      <ul className="flex justify-around items-center py-2">
+    <nav className="fixed bottom-0 left-0 right-0 border-t bg-white/80 backdrop-blur-md z-50">
+      <ul className="grid grid-cols-5 md:grid-cols-6">
         {items.map(({ href, label, Icon }) => {
           const active = pathname === href;
           return (
-            <li key={href}>
-              <Link to={href} className="flex flex-col items-center text-xs">
-                <Icon className={`h-5 w-5 mb-1 ${active ? "text-blue-600" : "text-gray-500"}`} />
-                <span className={`${active ? "text-blue-600 font-medium" : "text-gray-500"}`}>
-                  {label}
-                </span>
+            <li key={href} className="flex flex-col items-center">
+              <Link
+                href={href}
+                className={`flex flex-col items-center py-2 ${
+                  active ? "text-primary font-semibold" : "text-gray-500 hover:text-primary"
+                }`}
+              >
+                <Icon className={`h-6 w-6 mb-1 ${active ? "text-primary" : ""}`} />
+                <span className="text-xs">{label}</span>
               </Link>
             </li>
           );
