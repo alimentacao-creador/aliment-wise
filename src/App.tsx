@@ -9,12 +9,13 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { BottomNav } from "@/components/navigation/BottomNav";
 
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Registar from "./pages/Registar";
+import Entrar from "./pages/Entrar";
 import Verify from "./pages/Verify";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import Meal from "./pages/Meal";
+import Chat from "./pages/Chat";
 import Workouts from "./pages/Workouts";
 import Stats from "./pages/Stats";
 import Profile from "./pages/Profile";
@@ -36,8 +37,8 @@ const App = () => {
               <Routes>
                 {/* Public routes */}
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/registar" element={<Registar />} />
+                <Route path="/entrar" element={<Entrar />} />
                 <Route path="/verify" element={<Verify />} />
                 
                 {/* Protected routes */}
@@ -55,12 +56,16 @@ const App = () => {
                   </ProtectedRoute>
                 } />
                 <Route path="/meal" element={
-                  <ProtectedRoute>
-                    <>
-                      <Meal />
-                      <BottomNav />
-                    </>
-                  </ProtectedRoute>
+                  <>
+                    <Meal />
+                    <BottomNav />
+                  </>
+                } />
+                <Route path="/chat" element={
+                  <>
+                    <Chat />
+                    <BottomNav />
+                  </>
                 } />
                 <Route path="/workouts" element={
                   <ProtectedRoute>
