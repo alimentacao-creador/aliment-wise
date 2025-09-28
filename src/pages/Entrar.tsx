@@ -2,15 +2,15 @@
 
 import { useEffect } from "react";
 import { enterDemo } from "@/lib/demo";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 
 export default function EntrarPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   
   useEffect(() => {
     enterDemo();
-    router.replace("/dashboard");
-  }, [router]);
+    navigate("/dashboard");
+  }, [navigate]);
   
   return null;
 }

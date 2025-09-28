@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "react-router-dom";
 import { Home, Utensils, Dumbbell, BarChart3, User, CreditCard } from "lucide-react";
 import { isDemo } from "@/lib/demo";
 import { useEffect, useState } from "react";
@@ -16,7 +15,8 @@ const items = [
 ];
 
 export default function BottomNavbar() {
-  const pathname = usePathname();
+  const location = useLocation();
+  const pathname = location.pathname;
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function BottomNavbar() {
           const active = pathname === href;
           return (
             <li key={href}>
-              <Link href={href} className="flex flex-col items-center text-xs">
+              <Link to={href} className="flex flex-col items-center text-xs">
                 <Icon className={`h-5 w-5 mb-1 ${active ? "text-blue-600" : "text-gray-500"}`} />
                 <span className={`${active ? "text-blue-600 font-medium" : "text-gray-500"}`}>
                   {label}

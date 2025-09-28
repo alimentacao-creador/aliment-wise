@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { enterDemo } from "@/lib/demo";
 
 export default function Home() {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-6">
@@ -26,7 +26,7 @@ export default function Home() {
         <button
           onClick={() => {
             enterDemo();
-            router.push("/dashboard");
+            navigate("/dashboard");
           }}
           className="w-full rounded-xl border py-3 font-medium"
         >
