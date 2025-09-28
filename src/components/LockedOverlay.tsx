@@ -1,4 +1,6 @@
 "use client";
+
+// Component for locking features in demo mode
 export default function LockedOverlay({ 
   message="Funcionalidade disponível apenas para utilizadores registados.", 
   ctaHref="/registar",
