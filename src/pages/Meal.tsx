@@ -45,7 +45,7 @@ export default function MealPage(){
               <div className="flex-1">
                 <p className="font-medium">{m.name}</p>
                 <p className="text-sm text-gray-600">{new Date(m.date).toLocaleString()}</p>
-                <div className="mt-2 grid grid-cols-3 gap-2 text-sm">
+                <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
                   <div className="card p-2"><b>Calorias</b><div>{m.calories} kcal</div></div>
                   <div className="card p-2"><b>Proteína</b><div>{m.nutrients.protein} g</div></div>
                   <div className="card p-2"><b>Hidratos</b><div>{m.nutrients.carbs} g</div></div>

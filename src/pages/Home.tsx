@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Home() {
-  const router = useRouter();
-  const enter = () => { localStorage.setItem("demo","true"); router.push("/dashboard"); };
+  const navigate = useNavigate();
+  const enter = () => { localStorage.setItem("demo","true"); navigate("/dashboard"); };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-cover bg-center relative" style={{ backgroundImage: "url('/bg.jpg')" }}>

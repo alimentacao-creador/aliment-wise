@@ -12,7 +12,7 @@ export default function ProfilePage(){
   const resetDemo = () => {
     Object.values(keys).forEach(k=>ls.remove(k as string));
     if (typeof window !== "undefined") localStorage.setItem("demo","true");
-    location.reload();
+    window.location.reload();
   };
 
   return (

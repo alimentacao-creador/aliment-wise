@@ -2,14 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Simple demo styles */
-:root {
-  --bg: 255 255 255;
-  --fg: 17 24 39;
-  --muted: 107 114 128;
-}
-
-body {
-  background: rgb(var(--bg));
-  color: rgb(var(--fg));
-}
+html, body { height: 100%; }
+body { background: #f8fafc; color: #0f172a; }
+.card { @apply rounded-xl border bg-white shadow-sm; }
+.btn { @apply inline-flex items-center justify-center rounded-2xl font-semibold transition disabled:opacity-50; }
+.btn-primary { @apply text-white shadow-lg bg-gradient-to-r from-primary-700 to-primary-500 hover:brightness-110; }
+.btn-secondary { @apply bg-white/90 text-gray-900 border-2 border-gold hover:bg-yellow-50; }
+.input { @apply w-full rounded-lg border px-3 py-2; }
