@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { useDemo } from "@/hooks/useDemo";
+import { Logo } from "@/components/Logo";
 import heroImage from "@/assets/hero-nutrition.jpg";
 import { Play, Star, Users } from "lucide-react";
 
@@ -42,7 +43,10 @@ const Home = () => {
           style={{ backgroundImage: `url(${heroImage})` }}
         />
         <div className="relative z-10 text-center space-y-8 max-w-3xl">
-          <div className="space-y-4">
+          <div className="space-y-6">
+            <div className="flex justify-center">
+              <Logo size="large" className="h-16 md:h-20 mb-4" />
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold bg-gradient-wellness bg-clip-text text-transparent">
               Alimentação Inteligente APP
             </h1>

@@ -1,50 +1,51 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Plus, Copy, Trash2, Edit3 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { AuthWrapper } from "@/components/AuthWrapper";
+import { Logo } from "@/components/Logo";
+import { useAuth } from "@/hooks/useAuth";
+import { useDemo } from "@/hooks/useDemo";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { Plus, Dumbbell } from "lucide-react";
 
 interface Exercise {
   id: string;
+  workout_id: string;
   name: string;
   sets: number;
   reps: number;
   weight?: number;
-  time?: number;
+  time_seconds?: number;
+  order_index: number;
 }
 
-interface WorkoutDay {
-  day: string;
+interface Workout {
+  id: string;
+  name: string;
+  day_of_week: string;
+  description?: string;
   exercises: Exercise[];
 }
 
+const DAYS_OF_WEEK = [
+  { value: "monday", label: "Segunda-feira" },
+  { value: "tuesday", label: "Terça-feira" },
+  { value: "wednesday", label: "Quarta-feira" },
+  { value: "thursday", label: "Quinta-feira" },
+  { value: "friday", label: "Sexta-feira" },
+  { value: "saturday", label: "Sábado" },
+  { value: "sunday", label: "Domingo" },
+];
+
 const Workouts = () => {
-  const { t } = useTranslation();
-  const [workoutPlan, setWorkoutPlan] = useState<WorkoutDay[]>([
-    { day: 'monday', exercises: [] },
-    { day: 'tuesday', exercises: [] },
-    { day: 'wednesday', exercises: [] },
-    { day: 'thursday', exercises: [] },
-    { day: 'friday', exercises: [] },
-    { day: 'saturday', exercises: [] },
-    { day: 'sunday', exercises: [] },
-  ]);
-
-  const [newExercise, setNewExercise] = useState<Omit<Exercise, 'id'>>({
-    name: '',
-    sets: 3,
-    reps: 12,
-    weight: 0,
-    time: 0,
-  });
-
-  const [editingExercise, setEditingExercise] = useState<string | null>(null);
-  const [activeDay, setActiveDay] = useState('monday');
+  const { user } = useAuth();
+  const { isDemo } = useDemo();
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const addExercise = (day: string) => {
     if (!newExercise.name.trim()) {

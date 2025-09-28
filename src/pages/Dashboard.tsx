@@ -1,161 +1,265 @@
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { StatsCard } from "@/components/dashboard/StatsCard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, Target, TrendingUp, Utensils, Camera, MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AuthWrapper } from "@/components/AuthWrapper";
+import { LockedOverlay } from "@/components/LockedOverlay";
+import { Logo } from "@/components/Logo";
 import { useAuth } from "@/hooks/useAuth";
-import heroImage from "@/assets/hero-nutrition.jpg";
+import { useDemo } from "@/hooks/useDemo";
+import { 
+  Activity, 
+  Utensils, 
+  Dumbbell, 
+  TrendingUp, 
+  Weight,
+  Calculator,
+  Flame,
+  Target
+} from "lucide-react";
 
 const Dashboard = () => {
-  const { t } = useTranslation();
-  const { user } = useAuth();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { isDemo } = useDemo();
 
-  useEffect(() => {
-    // Check if user has completed onboarding
-    // This would typically involve checking user profile data
-    // For now, we'll assume they need onboarding if they just signed up
-  }, [user]);
+  // Demo/sample data
+  const statsData = {
+    weight: isDemo ? 0 : (user ? 75 : 0),
+    bmi: isDemo ? 0 : (user ? 24.5 : 0),
+    calories: isDemo ? 0 : (user ? 1850 : 0),
+    workouts: isDemo ? 3 : (user ? 5 : 0),
+  };
+
+  const StatsCard = ({ 
+    title, 
+    value, 
+    unit, 
+    icon: Icon, 
+    description, 
+    onClick, 
+    locked = false 
+  }: {
+    title: string;
+    value: number;
+    unit: string;
+    icon: any;
+    description: string;
+    onClick: () => void;
+    locked?: boolean;
+  }) => {
+    const CardComponent = (
+      <Card 
+        className="cursor-pointer hover:shadow-wellness transition-wellness"
+        onClick={!locked ? onClick : undefined}
+      >
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">{title}</CardTitle>
+          <Icon className="h-4 w-4 text-muted-foreground" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">
+            {value}{unit}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {description}
+          </p>
+        </CardContent>
+      </Card>
+    );
+
+    if (locked) {
+      return (
+        <LockedOverlay
+          title="Funcionalidade Premium"
+          message="Esta funcionalidade está disponível apenas para utilizadores registados. Crie já a sua conta gratuita e desbloqueie 7 dias Premium."
+        >
+          {CardComponent}
+        </LockedOverlay>
+      );
+    }
+
+    return CardComponent;
+  };
+
+  const QuickActionCard = ({ 
+    title, 
+    description, 
+    icon: Icon, 
+    onClick, 
+    locked = false,
+    variant = "default" 
+  }: {
+    title: string;
+    description: string;
+    icon: any;
+    onClick: () => void;
+    locked?: boolean;
+    variant?: "default" | "premium";
+  }) => {
+    const CardComponent = (
+      <Card 
+        className="cursor-pointer hover:shadow-wellness transition-wellness h-full"
+        onClick={!locked ? onClick : undefined}
+      >
+        <CardHeader>
+          <div className={`w-12 h-12 ${variant === 'premium' ? 'bg-gradient-wellness' : 'bg-primary'} rounded-lg flex items-center justify-center mb-4`}>
+            <Icon className="w-6 h-6 text-white" />
+          </div>
+          <CardTitle className="text-lg">{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+      </Card>
+    );
+
+    if (locked) {
+      return (
+        <LockedOverlay
+          title="Funcionalidade Premium"
+          message="Esta funcionalidade está disponível apenas para utilizadores registados. Crie já a sua conta gratuita e desbloqueie 7 dias Premium."
+        >
+          {CardComponent}
+        </LockedOverlay>
+      );
+    }
+
+    return CardComponent;
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle pb-24">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-hero opacity-90"></div>
-        <div className="relative z-10 px-4 py-12 text-center text-white">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            {t("dashboard.welcome")}
-          </h1>
-          <p className="text-lg opacity-90 max-w-2xl mx-auto mb-6">
-            Transforme sua alimentação e treino com inteligência artificial
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              variant="glass" 
-              size="lg"
-              onClick={() => navigate("/meal")}
-            >
-              <Camera className="h-5 w-5 mr-2" />
-              {t("dashboard.analyzeMeal")}
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-white/30 text-white hover:bg-white/10"
-              onClick={() => navigate("/workouts")}
-            >
-              <MessageCircle className="h-5 w-5 mr-2" />
-              {t("dashboard.viewWorkouts")}
-            </Button>
+    <AuthWrapper>
+      <div className="min-h-screen bg-gradient-nutrition pb-20">
+        {/* Header */}
+        <div className="bg-card border-b border-border px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Logo size="small" />
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Dashboard</h1>
+                <p className="text-sm text-muted-foreground">
+                  {isDemo ? "Modo Demonstração" : user ? `Olá, ${user.email}` : "Bem-vindo"}
+                </p>
+              </div>
+            </div>
+            {isDemo && (
+              <Button 
+                variant="premium" 
+                size="sm"
+                onClick={() => navigate("/registar")}
+              >
+                Criar Conta
+              </Button>
+            )}
           </div>
         </div>
-      </section>
 
-      <main className="max-w-4xl mx-auto px-4 py-6 space-y-8">
-        {/* Today's Progress */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center">
-            <Target className="h-6 w-6 mr-2 text-primary" />
-            {t("dashboard.todaysProgress")}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <StatsCard 
-              title={t("dashboard.weight")}
-              value="72.5"
-              unit="kg"
-              change={-0.5}
-              icon={<Target className="h-5 w-5" />}
-              variant="success"
-            />
-            <StatsCard 
-              title={t("dashboard.bmi")}
-              value="23.1"
-              change={-0.2}
-              icon={<Activity className="h-5 w-5" />}
-              variant="default"
-            />
-            <StatsCard 
-              title={t("dashboard.calories")}
-              value="1,847"
-              change={5.2}
-              icon={<Utensils className="h-5 w-5" />}
-              variant="warning"
-            />
-            <StatsCard 
-              title={t("dashboard.workouts")}
-              value="4"
-              unit=""
-              change={25}
-              icon={<TrendingUp className="h-5 w-5" />}
-              variant="success"
-            />
+        <div className="p-4 space-y-6">
+          {/* Stats Overview */}
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Resumo de Hoje</h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <StatsCard
+                title="Peso"
+                value={statsData.weight}
+                unit="kg"
+                icon={Weight}
+                description="Peso atual"
+                onClick={() => navigate("/profile")}
+                locked={isDemo}
+              />
+              <StatsCard
+                title="IMC"
+                value={statsData.bmi}
+                unit=""
+                icon={Calculator}
+                description="Índice massa corporal"
+                onClick={() => navigate("/profile")}
+                locked={isDemo}
+              />
+              <StatsCard
+                title="Calorias"
+                value={statsData.calories}
+                unit="kcal"
+                icon={Flame}
+                description="Consumidas hoje"
+                onClick={() => navigate("/meal")}
+                locked={isDemo}
+              />
+              <StatsCard
+                title="Treinos"
+                value={statsData.workouts}
+                unit=""
+                icon={Target}
+                description="Esta semana"
+                onClick={() => navigate("/workouts")}
+                locked={false} // Workouts are unlocked in demo
+              />
+            </div>
           </div>
-        </section>
 
-        {/* Quick Access */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6">{t("dashboard.quickAccess")}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card 
-              className="shadow-card transition-wellness hover:shadow-wellness cursor-pointer group"
-              onClick={() => navigate("/meal")}
-            >
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Utensils className="w-8 h-8 text-primary" />
-                </div>
-                <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                  {t("dashboard.analyzeMeal")}
-                </CardTitle>
-                <CardDescription>
-                  Use a IA para analisar suas refeições
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card 
-              className="shadow-card transition-wellness hover:shadow-wellness cursor-pointer group"
-              onClick={() => navigate("/workouts")}
-            >
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Activity className="w-8 h-8 text-primary" />
-                </div>
-                <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                  {t("dashboard.viewWorkouts")}
-                </CardTitle>
-                <CardDescription>
-                  Acesse seus planos de treino
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card 
-              className="shadow-card transition-wellness hover:shadow-wellness cursor-pointer group"
-              onClick={() => navigate("/stats")}
-            >
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <TrendingUp className="w-8 h-8 text-primary" />
-                </div>
-                <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                  {t("dashboard.checkStats")}
-                </CardTitle>
-                <CardDescription>
-                  Veja suas estatísticas detalhadas
-                </CardDescription>
-              </CardHeader>
-            </Card>
+          {/* Quick Actions */}
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Acesso Rápido</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <QuickActionCard
+                title="Treinos"
+                description="Gerir planos semanais"
+                icon={Dumbbell}
+                onClick={() => navigate("/workouts")}
+                locked={false}
+                variant="default"
+              />
+              <QuickActionCard
+                title="Alimentação"
+                description="Analisar refeições"
+                icon={Utensils}
+                onClick={() => navigate("/meal")}
+                locked={isDemo}
+                variant="premium"
+              />
+              <QuickActionCard
+                title="Estatísticas"
+                description="Ver progresso"
+                icon={TrendingUp}
+                onClick={() => navigate("/stats")}
+                locked={isDemo}
+                variant="premium"
+              />
+              <QuickActionCard
+                title="Chat IA"
+                description="Conselhos personalizados"
+                icon={Activity}
+                onClick={() => navigate("/chat")}
+                locked={isDemo}
+                variant="premium"
+              />
+            </div>
           </div>
-        </section>
-      </main>
-    </div>
+
+          {/* Demo Mode Notice */}
+          {isDemo && (
+            <Card className="border-primary/20 bg-primary/5">
+              <CardContent className="pt-6">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-primary mb-2">
+                    Modo Demonstração Ativo
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Está a usar a versão demonstração. Apenas os Treinos estão totalmente funcionais.
+                  </p>
+                  <Button 
+                    variant="premium" 
+                    onClick={() => navigate("/registar")}
+                  >
+                    Criar Conta Gratuita - 7 Dias Premium
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </div>
+    </AuthWrapper>
   );
 };
 

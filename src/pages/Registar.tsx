@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { useDemo } from "@/hooks/useDemo";
+import { Logo } from "@/components/Logo";
 import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Star, Mail } from "lucide-react";
 
@@ -128,8 +129,8 @@ const Registar = () => {
 
         <Card className="shadow-wellness">
           <CardHeader className="space-y-1 text-center">
-            <div className="w-16 h-16 bg-gradient-wellness rounded-full flex items-center justify-center mx-auto mb-4">
-              <Star className="w-8 h-8 text-white" />
+            <div className="flex justify-center mb-4">
+              <Logo size="medium" />
             </div>
             <CardTitle className="text-2xl font-bold">
               Alimentação Inteligente
