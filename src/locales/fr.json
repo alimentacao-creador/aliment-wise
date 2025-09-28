@@ -1,0 +1,131 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "meal": "Repas",
+    "workouts": "Entraînements",
+    "stats": "Statistiques",
+    "profile": "Profil"
+  },
+  "auth": {
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "forgotPassword": "Mot de passe oublié?",
+    "loginWithGoogle": "Se connecter avec Google",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "dontHaveAccount": "Vous n'avez pas de compte?",
+    "verifyEmail": "Vérifiez votre email",
+    "verifyEmailText": "Nous avons envoyé un lien de vérification à votre email. Cliquez sur le lien pour activer votre compte.",
+    "resendEmail": "Renvoyer l'email",
+    "logout": "Déconnexion"
+  },
+  "onboarding": {
+    "title": "Évaluation Santé",
+    "subtitle": "Aidez-nous à personnaliser votre expérience",
+    "name": "Nom complet",
+    "age": "Âge",
+    "gender": "Sexe",
+    "height": "Taille (cm)",
+    "weight": "Poids (kg)",
+    "goal": "Objectif",
+    "allergies": "Allergies ou restrictions alimentaires",
+    "continue": "Continuer",
+    "goals": {
+      "lose": "Perdre du poids",
+      "gain": "Prendre du muscle",
+      "maintain": "Rester en forme"
+    },
+    "genders": {
+      "male": "Homme",
+      "female": "Femme",
+      "other": "Autre"
+    }
+  },
+  "dashboard": {
+    "title": "Aperçu",
+    "welcome": "Bon retour!",
+    "todaysProgress": "Progrès d'aujourd'hui",
+    "weight": "Poids",
+    "bmi": "IMC",
+    "calories": "Calories",
+    "workouts": "Entraînements",
+    "quickAccess": "Accès rapide",
+    "analyzeMeal": "Analyser le repas",
+    "viewWorkouts": "Voir les entraînements",
+    "checkStats": "Voir les statistiques"
+  },
+  "meal": {
+    "title": "Analyse des Repas",
+    "uploadPhoto": "Télécharger une photo du repas",
+    "analyzing": "Analyse en cours...",
+    "results": "Résultats de l'analyse",
+    "calories": "Calories",
+    "nutrients": "Nutriments",
+    "recipes": "Recettes suggérées",
+    "balanced": "Équilibrée",
+    "gourmet": "Gourmet",
+    "targeted": "Adaptée à l'objectif"
+  },
+  "workouts": {
+    "title": "Plan d'Entraînement",
+    "weeklyPlan": "Plan hebdomadaire",
+    "addExercise": "Ajouter un exercice",
+    "exerciseName": "Nom de l'exercice",
+    "sets": "Séries",
+    "reps": "Répétitions",
+    "time": "Temps",
+    "weight": "Poids",
+    "save": "Sauvegarder",
+    "delete": "Supprimer",
+    "duplicate": "Dupliquer",
+    "days": {
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "saturday": "Samedi",
+      "sunday": "Dimanche"
+    }
+  },
+  "stats": {
+    "title": "Statistiques",
+    "weeklyProgress": "Progrès hebdomadaire",
+    "monthlyProgress": "Progrès mensuel",
+    "weightProgress": "Évolution du poids",
+    "caloriesProgress": "Calories consommées",
+    "workoutsCompleted": "Entraînements terminés"
+  },
+  "profile": {
+    "title": "Profil",
+    "editProfile": "Modifier le profil",
+    "language": "Langue",
+    "subscription": "Abonnement",
+    "deleteAccount": "Supprimer le compte",
+    "deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer votre compte? Cette action ne peut pas être annulée."
+  },
+  "subscription": {
+    "title": "Abonnement",
+    "currentPlan": "Plan actuel",
+    "freeTrial": "Essai gratuit",
+    "premium": "Premium",
+    "cancelled": "Annulé",
+    "upgrade": "Mettre à niveau",
+    "manage": "Gérer l'abonnement",
+    "trialEndsIn": "L'essai se termine dans",
+    "days": "jours"
+  },
+  "common": {
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "next": "Suivant",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  }
+}

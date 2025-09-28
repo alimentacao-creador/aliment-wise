@@ -1,0 +1,131 @@
+{
+  "navigation": {
+    "home": "Home",
+    "meal": "Meal",
+    "workouts": "Workouts",
+    "stats": "Stats",
+    "profile": "Profile"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot password?",
+    "loginWithGoogle": "Login with Google",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "verifyEmail": "Verify your email",
+    "verifyEmailText": "We've sent a verification link to your email. Click the link to activate your account.",
+    "resendEmail": "Resend email",
+    "logout": "Logout"
+  },
+  "onboarding": {
+    "title": "Health Assessment",
+    "subtitle": "Help us personalize your experience",
+    "name": "Full name",
+    "age": "Age",
+    "gender": "Gender",
+    "height": "Height (cm)",
+    "weight": "Weight (kg)",
+    "goal": "Goal",
+    "allergies": "Allergies or dietary restrictions",
+    "continue": "Continue",
+    "goals": {
+      "lose": "Lose weight",
+      "gain": "Gain muscle",
+      "maintain": "Stay fit"
+    },
+    "genders": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    }
+  },
+  "dashboard": {
+    "title": "Overview",
+    "welcome": "Welcome back!",
+    "todaysProgress": "Today's progress",
+    "weight": "Weight",
+    "bmi": "BMI",
+    "calories": "Calories",
+    "workouts": "Workouts",
+    "quickAccess": "Quick access",
+    "analyzeMeal": "Analyze meal",
+    "viewWorkouts": "View workouts",
+    "checkStats": "Check stats"
+  },
+  "meal": {
+    "title": "Meal Analysis",
+    "uploadPhoto": "Upload meal photo",
+    "analyzing": "Analyzing...",
+    "results": "Analysis results",
+    "calories": "Calories",
+    "nutrients": "Nutrients",
+    "recipes": "Suggested recipes",
+    "balanced": "Balanced",
+    "gourmet": "Gourmet",
+    "targeted": "Goal-oriented"
+  },
+  "workouts": {
+    "title": "Workout Plan",
+    "weeklyPlan": "Weekly plan",
+    "addExercise": "Add exercise",
+    "exerciseName": "Exercise name",
+    "sets": "Sets",
+    "reps": "Reps",
+    "time": "Time",
+    "weight": "Weight",
+    "save": "Save",
+    "delete": "Delete",
+    "duplicate": "Duplicate",
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "weeklyProgress": "Weekly progress",
+    "monthlyProgress": "Monthly progress",
+    "weightProgress": "Weight progress",
+    "caloriesProgress": "Calories consumed",
+    "workoutsCompleted": "Workouts completed"
+  },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit profile",
+    "language": "Language",
+    "subscription": "Subscription",
+    "deleteAccount": "Delete account",
+    "deleteAccountConfirm": "Are you sure you want to delete your account? This action cannot be undone."
+  },
+  "subscription": {
+    "title": "Subscription",
+    "currentPlan": "Current plan",
+    "freeTrial": "Free trial",
+    "premium": "Premium",
+    "cancelled": "Cancelled",
+    "upgrade": "Upgrade plan",
+    "manage": "Manage subscription",
+    "trialEndsIn": "Trial ends in",
+    "days": "days"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  }
+}
