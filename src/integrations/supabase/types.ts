@@ -14,7 +14,177 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      meal_images: {
+        Row: {
+          analysis_data: Json | null
+          calories: number | null
+          carbs: number | null
+          created_at: string | null
+          fat: number | null
+          id: string
+          image_url: string | null
+          protein: number | null
+          user_id: string
+        }
+        Insert: {
+          analysis_data?: Json | null
+          calories?: number | null
+          carbs?: number | null
+          created_at?: string | null
+          fat?: number | null
+          id?: string
+          image_url?: string | null
+          protein?: number | null
+          user_id: string
+        }
+        Update: {
+          analysis_data?: Json | null
+          calories?: number | null
+          carbs?: number | null
+          created_at?: string | null
+          fat?: number | null
+          id?: string
+          image_url?: string | null
+          protein?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meal_images_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          alergias: string | null
+          altura: number | null
+          created_at: string | null
+          email: string
+          id: string
+          idade: number | null
+          nome: string | null
+          objetivo: string | null
+          peso: number | null
+          sexo: string | null
+          subscription_status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          alergias?: string | null
+          altura?: number | null
+          created_at?: string | null
+          email: string
+          id: string
+          idade?: number | null
+          nome?: string | null
+          objetivo?: string | null
+          peso?: number | null
+          sexo?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          alergias?: string | null
+          altura?: number | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          idade?: number | null
+          nome?: string | null
+          objetivo?: string | null
+          peso?: number | null
+          sexo?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      workout_exercises: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          order_index: number | null
+          reps: number | null
+          sets: number | null
+          time_seconds: number | null
+          weight: number | null
+          workout_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          order_index?: number | null
+          reps?: number | null
+          sets?: number | null
+          time_seconds?: number | null
+          weight?: number | null
+          workout_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          order_index?: number | null
+          reps?: number | null
+          sets?: number | null
+          time_seconds?: number | null
+          weight?: number | null
+          workout_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_exercises_workout_id_fkey"
+            columns: ["workout_id"]
+            isOneToOne: false
+            referencedRelation: "workouts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workouts: {
+        Row: {
+          created_at: string | null
+          day_of_week: string | null
+          description: string | null
+          id: string
+          name: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          day_of_week?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          day_of_week?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workouts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

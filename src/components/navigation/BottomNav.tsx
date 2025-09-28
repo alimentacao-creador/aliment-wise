@@ -1,16 +1,18 @@
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Home, Utensils, Dumbbell, BarChart3, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Início", path: "/", icon: Home },
-  { name: "Alimentação", path: "/meal", icon: Utensils },
-  { name: "Treino", path: "/workouts", icon: Dumbbell },
-  { name: "Estatísticas", path: "/stats", icon: BarChart3 },
-  { name: "Perfil", path: "/profile", icon: User },
+  { name: "navigation.home", path: "/dashboard", icon: Home },
+  { name: "navigation.meal", path: "/meal", icon: Utensils },
+  { name: "navigation.workouts", path: "/workouts", icon: Dumbbell },
+  { name: "navigation.stats", path: "/stats", icon: BarChart3 },
+  { name: "navigation.profile", path: "/profile", icon: User },
 ];
 
 export const BottomNav = () => {
+  const { t } = useTranslation();
   const location = useLocation();
 
   return (
@@ -32,7 +34,7 @@ export const BottomNav = () => {
               )}
             >
               <Icon className="h-5 w-5 mb-1" />
-              <span className="text-xs font-medium">{item.name}</span>
+              <span className="text-xs font-medium">{t(item.name)}</span>
             </Link>
           );
         })}
