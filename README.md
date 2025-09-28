@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# Alimentação Inteligente APP (Demo Mode)
 
-## Project info
+Demo-only version of a nutrition and fitness application built with Next.js 14.
 
-**URL**: https://lovable.dev/projects/6c2c24ff-0f7d-4a9b-839a-14c9abfb8ff7
+## Features
 
-## How can I edit this code?
+- **Demo Mode Only**: Complete demo experience without external dependencies
+- **Mobile-First**: Responsive design optimized for mobile devices
+- **Next.js 14**: App Router with TypeScript
+- **TailwindCSS**: Clean, modern styling
+- **Lucide Icons**: Beautiful icons throughout the app
 
-There are several ways of editing your application.
+## Demo Mode Features
 
-**Use Lovable**
+- **Home**: Large logo with demo entry and registration placeholder
+- **Dashboard**: Overview cards with zero values
+- **Workouts**: ✅ **FULLY FUNCTIONAL** - Complete CRUD with localStorage
+- **Meal Analysis**: UI shown but locked with overlay
+- **Chat**: Interface visible but disabled
+- **Stats**: Charts/data shown with zero values
+- **Profile**: Form visible but editing disabled
+- **Subscription**: Locked page with call-to-action
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6c2c24ff-0f7d-4a9b-839a-14c9abfb8ff7) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+```bash
+# Install dependencies
+npm install
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Run development server  
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## Demo Mode Usage
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. Visit the home page (`/`)
+2. Click "Entrar em modo Demonstração"
+3. Explore the app - only **Workouts** section is fully unlocked
+4. All data is stored locally in your browser
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+This project builds without any environment variables and deploys cleanly to Vercel:
 
-## What technologies are used for this project?
+```bash
+npm run build
+```
 
-This project is built with:
+No external APIs or secrets required for the demo version.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Project Structure
 
-## How can I deploy this project?
+- `src/app/` - Next.js App Router pages
+- `src/components/` - Reusable React components  
+- `src/lib/` - Demo mode utilities
+- `public/` - Static assets (logo, etc.)
 
-Simply open [Lovable](https://lovable.dev/projects/6c2c24ff-0f7d-4a9b-839a-14c9abfb8ff7) and click on Share -> Publish.
+## Navigation
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Bottom navbar appears only when in demo mode, providing access to:
+- Início (Dashboard)
+- Refeições (Meals) 🔒
+- Treino (Workouts) ✅
+- Estatísticas (Stats) 🔒  
+- Perfil (Profile) 🔒
+- Subscrição (Subscription) 🔒
