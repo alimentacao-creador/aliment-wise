@@ -1,228 +1,263 @@
-import { useState, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Camera, Upload, Loader2 } from "lucide-react";
+import { AuthWrapper } from "@/components/AuthWrapper";
+import { LockedOverlay } from "@/components/LockedOverlay";
+import { Logo } from "@/components/Logo";
+import { useAuth } from "@/hooks/useAuth";
+import { useDemo } from "@/hooks/useDemo";
+import { Camera, Upload, Utensils, BarChart3 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-interface MealAnalysis {
-  calories: number;
-  nutrients: {
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
-  recipes: {
-    name: string;
-    type: 'balanced' | 'gourmet' | 'targeted';
-    description: string;
-  }[];
-}
-
 const Meal = () => {
-  const { t } = useTranslation();
-  const [analyzing, setAnalyzing] = useState(false);
-  const [analysis, setAnalysis] = useState<MealAnalysis | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { user } = useAuth();
+  const { isDemo } = useDemo();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState<any>(null);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isDemo) {
+      // Block file selection in demo mode
+      return;
+    }
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setSelectedImage(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
+      setSelectedFile(file);
     }
   };
 
   const analyzeMeal = async () => {
-    if (!selectedImage) {
+    if (isDemo) {
+      // This won't be called in demo since button is blocked
+      return;
+    }
+
+    if (!selectedFile) {
       toast({
-        title: t("common.error"),
-        description: "Por favor, selecione uma imagem primeiro",
+        title: "Erro",
+        description: "Selecione uma imagem primeiro",
         variant: "destructive",
       });
       return;
     }
 
-    setAnalyzing(true);
+    setIsAnalyzing(true);
     
-    // Simulate API call - replace with actual implementation
+    // Real implementation would call Gemini Vision API
     setTimeout(() => {
-      const mockAnalysis: MealAnalysis = {
+      setAnalysisResult({
         calories: 450,
-        nutrients: {
-          protein: 25,
-          carbs: 40,
-          fat: 15
-        },
-        recipes: [
-          {
-            name: "Salada Equilibrada",
-            type: 'balanced',
-            description: "Uma salada nutritiva com todos os macronutrientes balanceados"
-          },
-          {
-            name: "Salada Gourmet",
-            type: 'gourmet',
-            description: "Versão sofisticada com ingredientes especiais"
-          },
-          {
-            name: "Salada Proteica",
-            type: 'targeted',
-            description: "Focada no seu objetivo de ganho de massa muscular"
-          }
+        protein: 28,
+        carbs: 35,
+        fat: 15,
+        suggestions: [
+          "Boa fonte de proteína magra",
+          "Considere adicionar mais vegetais",
+          "Quantidade adequada para o almoço"
         ]
-      };
-      
-      setAnalysis(mockAnalysis);
-      setAnalyzing(false);
-      
+      });
+      setIsAnalyzing(false);
       toast({
-        title: t("common.success"),
+        title: "Sucesso",
         description: "Análise concluída com sucesso!",
       });
-    }, 3000);
+    }, 2000);
   };
 
-  const getRecipeVariantColor = (type: string) => {
-    switch (type) {
-      case 'balanced': return 'bg-success/10 text-success';
-      case 'gourmet': return 'bg-warning/10 text-warning';
-      case 'targeted': return 'bg-primary/10 text-primary';
-      default: return 'bg-muted';
+  const CameraButton = () => {
+    const ButtonComponent = (
+      <Button variant="premium" size="lg" disabled={isDemo}>
+        <Camera className="w-5 h-5 mr-2" />
+        Tirar Foto
+      </Button>
+    );
+
+    if (isDemo) {
+      return (
+        <LockedOverlay
+          title="Funcionalidade Premium"
+          message="Funcionalidade disponível apenas em versão registada. Crie já a sua conta gratuita e desbloqueie 7 dias Premium."
+        >
+          {ButtonComponent}
+        </LockedOverlay>
+      );
     }
+
+    return ButtonComponent;
+  };
+
+  const UploadButton = () => {
+    const ButtonComponent = (
+      <div className="relative">
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleFileSelect}
+          className="absolute inset-0 opacity-0 cursor-pointer"
+          disabled={isDemo}
+        />
+        <Button variant="outline" size="lg" disabled={isDemo}>
+          <Upload className="w-5 h-5 mr-2" />
+          Fazer Upload
+        </Button>
+      </div>
+    );
+
+    if (isDemo) {
+      return (
+        <LockedOverlay
+          title="Funcionalidade Premium"
+          message="Funcionalidade disponível apenas em versão registada. Crie já a sua conta gratuita e desbloqueie 7 dias Premium."
+        >
+          {ButtonComponent}
+        </LockedOverlay>
+      );
+    }
+
+    return ButtonComponent;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle px-4 py-6 pb-24">
-      <div className="max-w-2xl mx-auto space-y-6">
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">
-              {t("meal.title")}
-            </CardTitle>
-            <CardDescription>
-              Carregue uma foto da sua refeição para análise nutricional
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Image Upload */}
-            <div className="space-y-4">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
+    <AuthWrapper>
+      <div className="min-h-screen bg-gradient-nutrition pb-20">
+        {/* Header */}
+        <div className="bg-card border-b border-border px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Logo size="small" />
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Análise de Refeições</h1>
+                <p className="text-sm text-muted-foreground">
+                  IA para análise nutricional
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4">
+          <div className="max-w-4xl mx-auto space-y-6">
+            <Card>
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl font-bold flex items-center justify-center">
+                  <Utensils className="w-6 h-6 mr-2 text-primary" />
+                  Fotografe sua refeição
+                </CardTitle>
+                <CardDescription>
+                  Use IA para analisar suas refeições e obter informações nutricionais
+                </CardDescription>
+              </CardHeader>
               
-              {selectedImage ? (
-                <div className="relative">
-                  <img 
-                    src={selectedImage} 
-                    alt="Meal" 
-                    className="w-full h-64 object-cover rounded-lg border-2 border-dashed border-muted"
-                  />
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="absolute top-2 right-2"
-                    onClick={() => fileInputRef.current?.click()}
+              <CardContent className="space-y-6">
+                {/* Upload Section */}
+                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
+                  <Camera className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-medium mb-2">Fotografe sua refeição</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Tire uma foto ou faça upload de uma imagem da sua comida
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <CameraButton />
+                    <UploadButton />
+                  </div>
+                  
+                  {selectedFile && (
+                    <div className="mt-4 p-3 bg-primary/10 rounded-lg">
+                      <p className="text-sm text-primary">
+                        ✓ Imagem selecionada: {selectedFile.name}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Analysis Button */}
+                <div className="text-center">
+                  <Button 
+                    onClick={analyzeMeal}
+                    disabled={!selectedFile || isAnalyzing || isDemo}
+                    size="lg"
+                    variant="premium"
                   >
-                    Alterar
+                    {isAnalyzing ? "Analisando..." : "Analisar Refeição"}
                   </Button>
                 </div>
-              ) : (
-                <div 
-                  className="w-full h-64 border-2 border-dashed border-muted rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <Camera className="w-12 h-12 text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground text-center">
-                    {t("meal.uploadPhoto")}
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Clique para selecionar uma imagem
-                  </p>
-                </div>
-              )}
-            </div>
 
-            <Button 
-              onClick={analyzeMeal}
-              disabled={!selectedImage || analyzing}
-              className="w-full"
-              size="lg"
-            >
-              {analyzing ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  {t("meal.analyzing")}
-                </>
-              ) : (
-                <>
-                  <Upload className="w-4 h-4 mr-2" />
-                  Analisar Refeição
-                </>
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Analysis Results */}
-        {analysis && (
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("meal.results")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Calories and Nutrients */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-4 bg-muted/50 rounded-lg">
-                  <div className="text-2xl font-bold text-primary">{analysis.calories}</div>
-                  <div className="text-sm text-muted-foreground">{t("meal.calories")}</div>
-                </div>
-                <div className="text-center p-4 bg-muted/50 rounded-lg">
-                  <div className="text-2xl font-bold text-success">{analysis.nutrients.protein}g</div>
-                  <div className="text-sm text-muted-foreground">Proteína</div>
-                </div>
-                <div className="text-center p-4 bg-muted/50 rounded-lg">
-                  <div className="text-2xl font-bold text-warning">{analysis.nutrients.carbs}g</div>
-                  <div className="text-sm text-muted-foreground">Carboidratos</div>
-                </div>
-                <div className="text-center p-4 bg-muted/50 rounded-lg">
-                  <div className="text-2xl font-bold text-destructive">{analysis.nutrients.fat}g</div>
-                  <div className="text-sm text-muted-foreground">Gordura</div>
-                </div>
-              </div>
-
-              {/* Recipe Suggestions */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">{t("meal.recipes")}</h3>
-                <div className="space-y-4">
-                  {analysis.recipes.map((recipe, index) => (
-                    <div key={index} className="p-4 border rounded-lg">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium">{recipe.name}</h4>
-                        <Badge className={getRecipeVariantColor(recipe.type)}>
-                          {t(`meal.${recipe.type}`)}
-                        </Badge>
+                {/* Results Section */}
+                {analysisResult && !isDemo && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center">
+                        <BarChart3 className="w-5 h-5 mr-2" />
+                        Informações Nutricionais
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div className="text-center p-3 bg-primary/5 rounded-lg">
+                          <div className="text-2xl font-bold text-primary">
+                            {analysisResult.calories}
+                          </div>
+                          <div className="text-sm text-muted-foreground">Calorias</div>
+                        </div>
+                        <div className="text-center p-3 bg-success/5 rounded-lg">
+                          <div className="text-2xl font-bold text-success">
+                            {analysisResult.protein}g
+                          </div>
+                          <div className="text-sm text-muted-foreground">Proteína</div>
+                        </div>
+                        <div className="text-center p-3 bg-warning/5 rounded-lg">
+                          <div className="text-2xl font-bold text-warning">
+                            {analysisResult.carbs}g
+                          </div>
+                          <div className="text-sm text-muted-foreground">Carboidratos</div>
+                        </div>
+                        <div className="text-center p-3 bg-accent/5 rounded-lg">
+                          <div className="text-2xl font-bold text-accent">
+                            {analysisResult.fat}g
+                          </div>
+                          <div className="text-sm text-muted-foreground">Gordura</div>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">{recipe.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+                      
+                      <div>
+                        <h4 className="font-medium mb-3">Sugestões da IA:</h4>
+                        <ul className="space-y-2">
+                          {analysisResult.suggestions.map((suggestion: string, index: number) => (
+                            <li key={index} className="flex items-center text-sm">
+                              <span className="w-2 h-2 bg-primary rounded-full mr-3"></span>
+                              {suggestion}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Demo Mode Notice */}
+                {isDemo && (
+                  <Card className="border-primary/20 bg-primary/5">
+                    <CardContent className="pt-6">
+                      <div className="text-center">
+                        <h3 className="text-lg font-semibold text-primary mb-2">
+                          Funcionalidade Bloqueada
+                        </h3>
+                        <p className="text-muted-foreground mb-4">
+                          A análise de refeições com IA está disponível apenas para utilizadores registados.
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
-    </div>
+    </AuthWrapper>
   );
 };
 
