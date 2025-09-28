@@ -17,14 +17,16 @@ const resources = {
   },
 };
 
+// Simple synchronous initialization
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'pt', // default language
+    lng: localStorage.getItem('language') || 'pt',
     fallbackLng: 'pt',
+    debug: false,
     interpolation: {
-      escapeValue: false, // react already safeguards from xss
+      escapeValue: false,
     },
   });
 
